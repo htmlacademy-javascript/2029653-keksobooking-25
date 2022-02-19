@@ -13,3 +13,5 @@ function getRandomFloat(min, max, symbolsAfterDot) {
   return Math.floor((Math.random() * (numberTo - numberFrom) + numberFrom) * multiplier) / multiplier;
 }
 
+getRandomInt(1, 2);
+getRandomFloat(1, 2, 10);
