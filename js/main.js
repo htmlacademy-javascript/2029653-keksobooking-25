@@ -1,16 +1,16 @@
-function getRandomPositiveInteger(a, b) {
+const getRandomPositiveInteger = (a, b) => {
   const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
   const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
   const result = Math.random() * (upper - lower + 1) + lower;
   return Math.floor(result);
-}
+};
 
-function getRandomPositiveFloat(a, b, digits = 1) {
+const getRandomPositiveFloat = (a, b, digits = 1) => {
   const lower = Math.min(Math.abs(a), Math.abs(b));
   const upper = Math.max(Math.abs(a), Math.abs(b));
   const result = Math.random() * (upper - lower) + lower;
   return +result.toFixed(digits);
-}
+};
 
 const HOTEL_TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const CHECKIN_TIMES = ['12:00', '13:00', '14:00'];
@@ -54,7 +54,7 @@ const getFeatures = () => {
 
 const getRandomArrayElement = (elements) => elements[getRandomPositiveInteger(0, elements.length - 1)];
 
-function createObject(number) {
+const createObject = (number) => {
   const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
   const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
   const type = HOTEL_TYPES[getRandomPositiveInteger(0, HOTEL_TYPES.length - 1)];
@@ -80,7 +80,7 @@ function createObject(number) {
       'lng': lng
     }
   };
-}
+};
 
 const createdObjects = Array.from({length: OBJECT_COUNT}, (v, i) => createObject(i));
 
