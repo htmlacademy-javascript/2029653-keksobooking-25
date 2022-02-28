@@ -1,17 +1,3 @@
-const getRandomPositiveInteger = (a, b) => {
-  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
-  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-const getRandomPositiveFloat = (a, b, digits = 1) => {
-  const lower = Math.min(Math.abs(a), Math.abs(b));
-  const upper = Math.max(Math.abs(a), Math.abs(b));
-  const result = Math.random() * (upper - lower) + lower;
-  return +result.toFixed(digits);
-};
-
 const HOTEL_TYPES = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 const CHECKIN_TIMES = ['12:00', '13:00', '14:00'];
 const CHECKOUT_TIMES = ['12:00', '13:00', '14:00'];
@@ -34,6 +20,21 @@ const MIN_GUESTS_COUNT = 1;
 const MAX_GUESTS_COUNT = 6;
 
 const OBJECT_COUNT = 10;
+
+const getRandomPositiveInteger = (a, b) => {
+  const lower = Math.ceil(Math.min(Math.abs(a), Math.abs(b)));
+  const upper = Math.floor(Math.max(Math.abs(a), Math.abs(b)));
+  const result = Math.random() * (upper - lower + 1) + lower;
+  return Math.floor(result);
+
+};
+const getRandomPositiveFloat = (a, b, digits = 1) => {
+  const lower = Math.min(Math.abs(a), Math.abs(b));
+  const upper = Math.max(Math.abs(a), Math.abs(b));
+  const result = Math.random() * (upper - lower) + lower;
+  return +result.toFixed(digits);
+
+};
 
 const getAvatarImg = (number) => {
   if (number < 10) {
