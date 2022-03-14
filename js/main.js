@@ -1,4 +1,4 @@
-import { createdObjects } from './data.js';
+import {cardsFragment} from './generator.js';
 
 // eslint-disable-next-line no-console
-console.log(createdObjects);
+console.log(cardsFragment);
