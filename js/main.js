@@ -1,8 +1,8 @@
 import { createdObjects } from './data.js';
-import { setActive, setUnactive} from './form.js';
+import { activateForm, deactivateForm} from './form.js';
 
 // eslint-disable-next-line no-console
 console.log(createdObjects);
 
-setActive();
-setUnactive();
+activateForm();
+deactivateForm();
