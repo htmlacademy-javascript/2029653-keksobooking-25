@@ -4,19 +4,18 @@ import {APARTMENT_TYPES} from './constants.js';
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 const cardsFragment = document.createDocumentFragment();
 const mapContainer = document.querySelector('#map-canvas');
-let firstObject = null;
 
-createdObjects.forEach((element, i) => {
-  const card = cardTemplate.cloneNode(true);
-  card.querySelector('.popup__title').textContent = element.offer.title;
-  card.querySelector('.popup__text--address').textContent = element.offer.address;
-  card.querySelector('.popup__text--price').innerHTML = `${element.offer.price} <span>₽/ночь</span>`;
-  card.querySelector('.popup__type').textContent = APARTMENT_TYPES[element.offer.type];
-  card.querySelector('.popup__text--capacity').textContent = `${element.offer.rooms} комнаты для ${element.offer.guests}`;
-  card.querySelector('.popup__text--time').innerHTML = `Заезд после ${element.offer.checkin}, выезд до ${element.offer.checkout}`;
+const createCardElement = (hotel) => {
+  const cardElement = cardTemplate.cloneNode(true);
+  cardElement.querySelector('.popup__title').textContent = hotel.offer.title;
+  cardElement.querySelector('.popup__text--address').textContent = hotel.offer.address;
+  cardElement.querySelector('.popup__text--price').innerHTML = `${hotel.offer.price} <span>₽/ночь</span>`;
+  cardElement.querySelector('.popup__type').textContent = APARTMENT_TYPES[hotel.offer.type];
+  cardElement.querySelector('.popup__text--capacity').textContent = `${hotel.offer.rooms} комнаты для ${hotel.offer.guests}`;
+  cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${hotel.offer.checkin}, выезд до ${hotel.offer.checkout}`;
 
-  const features = element.offer.features;
-  const featuresList = card.querySelectorAll('.popup__feature');
+  const features = hotel.offer.features;
+  const featuresList = cardElement.querySelectorAll('.popup__feature');
 
   featuresList.forEach((featuresListItem) => {
     const isNecessary = features.some(
@@ -28,11 +27,11 @@ createdObjects.forEach((element, i) => {
     }
   });
 
-  card.querySelector('.popup__description').textContent = element.offer.description;
+  cardElement.querySelector('.popup__description').textContent = hotel.offer.description;
 
-  const photos = card.querySelector('.popup__photos');
+  const photos = cardElement.querySelector('.popup__photos');
   const photoElement = photos.querySelector('.popup__photo');
-  const photoSources = element.offer.photos;
+  const photoSources = hotel.offer.photos;
 
   photoSources.forEach((image) => {
     const newPhotoElement = photoElement.cloneNode(true);
@@ -40,19 +39,14 @@ createdObjects.forEach((element, i) => {
     photos.append(newPhotoElement);
   });
 
-  card.querySelector('.popup__avatar').src = element.author;
+  cardElement.querySelector('.popup__avatar').src = hotel.author;
+  return cardElement;
+};
 
-  if (i === 0) {
-    //условие для вывода первого элемента на карту
-    //не понял почему не работает вариант
-    //mapContainer.appendChild(card)
-    //пришлось создавать отдельную переменную и её вставлять после даннго цикла forEach
-    firstObject = card;
-  }
-
-  cardsFragment.append(card);
+createdObjects.forEach((element) => {
+  cardsFragment.appendChild(createCardElement(element));
 });
 
-mapContainer.appendChild(firstObject);
+mapContainer.appendChild(createCardElement(createdObjects[0]));
 
 export {cardsFragment};
