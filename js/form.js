@@ -2,10 +2,10 @@ const adForm = document.querySelector('.ad-form');
 const activeElements = document.querySelectorAll('.ad-form fieldset, .map__filters select, .map__filters #housing-features');
 
 const ROOM_NUMBER_RULES = {
-  1 : [1],
-  2 : [1, 2],
-  3 : [1, 2, 3],
-  100 : [0]
+  1: [1],
+  2: [1, 2],
+  3: [1, 2, 3],
+  100: [0]
 };
 
 const CAPACITY_RULES = {
@@ -53,14 +53,16 @@ const validateCapacity = (capacity) => {
   return CAPACITY_RULES[capacity].includes(roomNumberValue);
 };
 
-adFormValidator.addValidator(roomNumberElement, validateRoomNumber, 'выберите другое количество комнат');
-adFormValidator.addValidator(capacityElement, validateCapacity, 'или выберите другое количество мест');
+const initForm = () => {
+  adFormValidator.addValidator(roomNumberElement, validateRoomNumber, 'выберите другое количество комнат');
+  adFormValidator.addValidator(capacityElement, validateCapacity, 'или выберите другое количество мест');
 
-adFormElement.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  if (adFormValidator.validate()) {
-    return adFormElement.submit();
-  }
-});
+  adFormElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (adFormValidator.validate()) {
+      return adFormElement.submit();
+    }
+  });
+};
 
-export {activateForm, deactivateForm};
+export {activateForm, deactivateForm, initForm};

@@ -1,5 +1,6 @@
 // import { createdObjects } from './data.js';
-import { activateForm, deactivateForm} from './form.js';
+import {activateForm, deactivateForm, initForm} from './form.js';
 
 deactivateForm();
 activateForm();
+initForm();
