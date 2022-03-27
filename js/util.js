@@ -30,9 +30,9 @@ const getRandomPositiveFloat = (a, b, digits = 1) => {
 
 const getAvatarImg = (number) => {
   if (number < 10) {
-    number = `0${ number }`;
+    number = `0${number}`;
   }
-  return `img/avatars/user${ number }.png`;
+  return `img/avatars/user${number}.png`;
 };
 
 const getPhotosArr = () => {
@@ -51,10 +51,10 @@ const createObject = (number) => {
   const lat = getRandomPositiveFloat(35.65000, 35.70000, 5);
   const lng = getRandomPositiveFloat(139.70000, 139.80000, 5);
   const type = HOTEL_TYPES[getRandomPositiveInteger(0, HOTEL_TYPES.length - 1)];
-  const title = `Welcome to our ${ type }!`;
-  const description = `${ title }! Best ${ type } on ${ getRandomPositiveInteger(10, 100) } miles`;
+  const title = `Welcome to our ${type}!`;
+  const description = `${title}! Best ${type} on ${getRandomPositiveInteger(10, 100)} miles`;
   return {
-    'author': getAvatarImg(number),
+    'author': getAvatarImg(number + 1),
     'offer': {
       'title': title,
       'address': [lat, lng],
@@ -75,4 +75,4 @@ const createObject = (number) => {
   };
 };
 
-export { createObject };
+export {createObject};

@@ -21,6 +21,15 @@ const MAX_GUESTS_COUNT = 6;
 
 const OBJECT_COUNT = 10;
 
+const APARTMENT_TYPES = {
+  'flat': 'Квартира',
+  'bungalow': 'Бунгало',
+  'house': 'Дом',
+  'palace': 'Дворец',
+  'hotel': 'Отель',
+};
+
+
 export {
   HOTEL_TYPES,
   CHECKIN_TIMES,
@@ -35,4 +44,5 @@ export {
   MIN_GUESTS_COUNT,
   MAX_GUESTS_COUNT,
   OBJECT_COUNT,
+  APARTMENT_TYPES,
 };
