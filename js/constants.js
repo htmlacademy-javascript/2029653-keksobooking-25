@@ -21,6 +21,13 @@ const MAX_GUESTS_COUNT = 6;
 
 const OBJECT_COUNT = 10;
 
+
+const TOKYO_COORDINATES = {
+  lat: 35.652832,
+  lng: 139.839478,
+};
+const DEFAULT_COORDINATES = TOKYO_COORDINATES;
+
 const APARTMENT_TYPES = {
   'flat': 'Квартира',
   'bungalow': 'Бунгало',
@@ -44,5 +51,6 @@ export {
   MIN_GUESTS_COUNT,
   MAX_GUESTS_COUNT,
   OBJECT_COUNT,
+  DEFAULT_COORDINATES,
   APARTMENT_TYPES,
 };
