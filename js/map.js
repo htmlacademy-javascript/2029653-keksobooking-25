@@ -55,10 +55,16 @@ const createMarker = (point) => {
 
 const setAddress = (coordinates) => {
   addressElement.value = `${coordinates.lat.toFixed(5)} ${coordinates.lng.toFixed(5)}`;
+//  тут проблема: почему-то не обновляет значения, а просто очищает.
 };
 
 const initMainMarker = () => {
   mainPinMarker.addTo(map);
+  setAddress(DEFAULT_COORDINATES);
+};
+
+const resetMainMarker = () => {
+  mainPinMarker.setLatLng(DEFAULT_COORDINATES);
   setAddress(DEFAULT_COORDINATES);
 };
 
@@ -83,4 +89,4 @@ const initMap = (callback) => {
   callback();
 };
 
-export {initMap, setCommonMarkers};
+export {initMap, setCommonMarkers, resetMainMarker};

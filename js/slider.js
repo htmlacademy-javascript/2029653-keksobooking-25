@@ -22,3 +22,9 @@ noUiSlider.create(priceSliderElement, {
 priceSliderElement.noUiSlider.on('update', () => {
   priceSliderValueElement.value = priceSliderElement.noUiSlider.get();
 });
+
+const resetPriceSlider = () => {
+  priceSliderElement.noUiSlider.reset();
+};
+
+export {resetPriceSlider};
