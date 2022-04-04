@@ -26,39 +26,29 @@ const showAlert = (message) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const closeErrorMessage = (evt) => {
-  evt.target.closest('.error').remove();
-};
-
-const closeSuccessMessage = (evt) => {
-  evt.target.closest('.success').remove();
-};
-
 const clickOnErrorContainer = (evt) => {
   if (evt.target.classList.contains('error')) {
-    closeErrorMessage(evt);
+    closeErrorMessage();
   }
 };
 
 const clickOnSuccessContainer = (evt) => {
   if (evt.target.classList.contains('success')) {
-    closeSuccessMessage(evt);
+    closeSuccessMessage();
   }
 };
 
 const onErrorMessageEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    document.querySelector('body > .error').remove();
-    document.removeEventListener('keydown', onErrorMessageEscKeydown);
+    closeErrorMessage();
   }
 };
 
 const onSuccessMessageEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
-    document.querySelector('body > .success').remove();
-    document.removeEventListener('keydown', onSuccessMessageEscKeydown);
+    closeSuccessMessage();
   }
 };
 
@@ -76,5 +66,15 @@ const showSuccessMessage = () => {
   document.addEventListener('keydown', onSuccessMessageEscKeydown);
   document.body.appendChild(successElement);
 };
+
+function closeErrorMessage() {
+  document.querySelector('body > .error').remove();
+  document.removeEventListener('keydown', onErrorMessageEscKeydown);
+}
+
+function closeSuccessMessage() {
+  document.querySelector('body > .success').remove();
+  document.removeEventListener('keydown', onSuccessMessageEscKeydown);
+}
 
 export {showAlert, showErrorMessage, showSuccessMessage};

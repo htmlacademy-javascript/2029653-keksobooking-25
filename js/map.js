@@ -1,4 +1,5 @@
 import {DEFAULT_COORDINATES} from './constants.js';
+import {createCardElement} from './generator.js';
 
 const addressElement = document.querySelector('#address');
 
@@ -37,8 +38,8 @@ const mainPinMarker = L.marker(
 const markerGroup = L.layerGroup();
 const initMarkerGroup = () => markerGroup.addTo(map);
 
-const createMarker = (point) => {
-  const {lat, lng} = point;
+const createMarker = (data) => {
+  const {lat, lng} = data.location;
   const marker = L.marker(
     {
       lat,
@@ -50,12 +51,12 @@ const createMarker = (point) => {
   );
 
   marker
-    .addTo(markerGroup);
+    .addTo(markerGroup)
+    .bindPopup(createCardElement(data));
 };
 
 const setAddress = (coordinates) => {
   addressElement.value = `${coordinates.lat.toFixed(5)} ${coordinates.lng.toFixed(5)}`;
-//  тут проблема: почему-то не обновляет значения, а просто очищает.
 };
 
 const initMainMarker = () => {
@@ -75,9 +76,9 @@ const setMainMarker = () => {
   });
 };
 
-const setCommonMarkers = (coordinates) => {
-  coordinates.forEach((point) => {
-    createMarker(point);
+const setCommonMarkers = (hotels) => {
+  hotels.forEach((hotel) => {
+    createMarker(hotel);
   });
 };
 
