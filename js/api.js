@@ -4,12 +4,12 @@ const getData = (onSuccess, onFail) => {
   fetch(HOTELS_DATA_URL)
     .then((response) => {
       if (response.ok) {
-        response.json()
-          .then((data) => onSuccess(data));
+        return response.json();
       } else {
         throw new Error('Не получилось получить отели, попробуйте обновить страницу');
       }
     })
+    .then(onSuccess)
     .catch((err) => {
       onFail(err.message);
     });
