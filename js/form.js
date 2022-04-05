@@ -1,5 +1,11 @@
+import {sendData} from './api.js';
+import {showAlert, showSuccessMessage} from './messages.js';
+import {resetMainMarker} from './map.js';
+import {resetPriceSlider} from './slider.js';
+
 const adForm = document.querySelector('.ad-form');
 const activeElements = document.querySelectorAll('.ad-form fieldset, .map__filters select, .map__filters #housing-features');
+const resetButton = adForm.querySelector('.ad-form__reset');
 
 const ROOM_NUMBER_RULES = {
   1: [1],
@@ -45,6 +51,7 @@ const deactivateForm = () => {
   activeElements.forEach((element) => {
     element.classList.add('disabled');
   });
+
 };
 
 const activateForm = () => {
@@ -69,6 +76,17 @@ const validateMinPrice = (price) => {
   return price >= MIN_PRICE_RULES[selectedHousingType];
 };
 
+const resetAdForm = () => {
+  adFormElement.reset();
+  resetMainMarker();
+  resetPriceSlider();
+};
+
+const onSuccess = () => {
+  resetAdForm();
+  showSuccessMessage();
+};
+
 const initForm = () => {
   adFormValidator.addValidator(roomNumberElement, validateRoomNumber, 'выберите другое количество комнат');
   adFormValidator.addValidator(capacityElement, validateCapacity, 'или выберите другое количество мест');
@@ -77,10 +95,12 @@ const initForm = () => {
   adFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (adFormValidator.validate()) {
-      return adFormElement.submit();
+      sendData(onSuccess, showAlert,  new FormData(adFormElement));
     }
   });
 };
+
+resetButton.addEventListener('click', resetAdForm);
 
 const changePricePlaceholder = () => {
   const selectedHousingType = housingTypeElement.options[housingTypeElement.selectedIndex].value;
