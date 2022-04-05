@@ -21,9 +21,21 @@ const CAPACITY_RULES = {
   3: [3]
 };
 
+const MIN_PRICE_RULES = {
+  'bungalow': 0,
+  'flat': 1000,
+  'hotel': 3000,
+  'house': 5000,
+  'palace': 10000,
+};
+
 const adFormElement = document.querySelector('.ad-form');
 const roomNumberElement = document.querySelector('#room_number');
 const capacityElement = document.querySelector('#capacity');
+const housingTypeElement = document.querySelector('#type');
+const priceElement = document.querySelector('#price');
+const timeinElement = document.querySelector('#timein');
+const timeoutElement = document.querySelector('#timeout');
 
 const adFormValidator = new Pristine(adFormElement, {
   classTo: 'ad-form__element',
@@ -59,6 +71,11 @@ const validateCapacity = (capacity) => {
   return CAPACITY_RULES[capacity].includes(roomNumberValue);
 };
 
+const validateMinPrice = (price) => {
+  const selectedHousingType = housingTypeElement.options[housingTypeElement.selectedIndex].value;
+  return price >= MIN_PRICE_RULES[selectedHousingType];
+};
+
 const resetAdForm = () => {
   adFormElement.reset();
   resetMainMarker();
@@ -73,6 +90,7 @@ const onSuccess = () => {
 const initForm = () => {
   adFormValidator.addValidator(roomNumberElement, validateRoomNumber, 'выберите другое количество комнат');
   adFormValidator.addValidator(capacityElement, validateCapacity, 'или выберите другое количество мест');
+  adFormValidator.addValidator(priceElement, validateMinPrice, 'цена должна быть выше');
 
   adFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
@@ -83,5 +101,20 @@ const initForm = () => {
 };
 
 resetButton.addEventListener('click', resetAdForm);
+
+const changePricePlaceholder = () => {
+  const selectedHousingType = housingTypeElement.options[housingTypeElement.selectedIndex].value;
+  priceElement.placeholder = MIN_PRICE_RULES[selectedHousingType];
+};
+
+housingTypeElement.addEventListener('change', changePricePlaceholder);
+
+timeinElement.addEventListener('change', () => {
+  timeoutElement.selectedIndex = timeinElement.selectedIndex;
+});
+
+timeoutElement.addEventListener('change', () => {
+  timeinElement.selectedIndex = timeoutElement.selectedIndex;
+});
 
 export {activateForm, deactivateForm, initForm};
