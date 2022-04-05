@@ -1,4 +1,5 @@
 import {DEFAULT_COORDINATES} from './constants.js';
+import {createCardElement} from './generator.js';
 
 const addressElement = document.querySelector('#address');
 
@@ -37,8 +38,8 @@ const mainPinMarker = L.marker(
 const markerGroup = L.layerGroup();
 const initMarkerGroup = () => markerGroup.addTo(map);
 
-const createMarker = (point) => {
-  const {lat, lng} = point;
+const createMarker = (data) => {
+  const {lat, lng} = data.location;
   const marker = L.marker(
     {
       lat,
@@ -50,7 +51,8 @@ const createMarker = (point) => {
   );
 
   marker
-    .addTo(markerGroup);
+    .addTo(markerGroup)
+    .bindPopup(createCardElement(data));
 };
 
 const setAddress = (coordinates) => {
@@ -62,6 +64,11 @@ const initMainMarker = () => {
   setAddress(DEFAULT_COORDINATES);
 };
 
+const resetMainMarker = () => {
+  mainPinMarker.setLatLng(DEFAULT_COORDINATES);
+  setAddress(DEFAULT_COORDINATES);
+};
+
 const setMainMarker = () => {
   mainPinMarker.on('dragend', (event) => {
     const coordinates = event.target.getLatLng();
@@ -69,9 +76,9 @@ const setMainMarker = () => {
   });
 };
 
-const setCommonMarkers = (coordinates) => {
-  coordinates.forEach((point) => {
-    createMarker(point);
+const setCommonMarkers = (hotels) => {
+  hotels.forEach((hotel) => {
+    createMarker(hotel);
   });
 };
 
@@ -83,4 +90,4 @@ const initMap = (callback) => {
   callback();
 };
 
-export {initMap, setCommonMarkers};
+export {initMap, setCommonMarkers, resetMainMarker};

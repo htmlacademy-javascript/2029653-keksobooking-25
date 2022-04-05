@@ -36,6 +36,10 @@ const APARTMENT_TYPES = {
   'hotel': 'Отель',
 };
 
+const HOTELS_DATA_URL = 'https://25.javascript.pages.academy/keksobooking/data';
+const DATA_URL = 'https://25.javascript.pages.academy/keksobooking/';
+
+const ALERT_SHOW_TIME = 3000;
 
 export {
   HOTEL_TYPES,
@@ -53,4 +57,7 @@ export {
   OBJECT_COUNT,
   DEFAULT_COORDINATES,
   APARTMENT_TYPES,
+  HOTELS_DATA_URL,
+  DATA_URL,
+  ALERT_SHOW_TIME,
 };
