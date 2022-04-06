@@ -1,6 +1,11 @@
 import {HOTELS_DATA_URL, DATA_URL} from './constants.js';
 
+let hotelsData = [];
+
 const getData = (onSuccess, onFail) => {
+  if (hotelsData.length !== 0) {
+    return onSuccess(hotelsData);
+  }
   fetch(HOTELS_DATA_URL)
     .then((response) => {
       if (response.ok) {
@@ -9,7 +14,10 @@ const getData = (onSuccess, onFail) => {
         throw new Error('Не получилось получить отели, попробуйте обновить страницу');
       }
     })
-    .then(onSuccess)
+    .then((data) => {
+      hotelsData = data;
+      onSuccess(data);
+    })
     .catch((err) => {
       onFail(err.message);
     });

@@ -2,6 +2,7 @@ import {DEFAULT_COORDINATES} from './constants.js';
 import {createCardElement} from './generator.js';
 import {getData} from './api.js';
 import {showAlert} from './messages.js';
+import {debounce} from './util.js';
 
 const HOTELS_COUNT = 10;
 
@@ -136,14 +137,21 @@ const setMainMarker = () => {
   });
 };
 
+const getFiltered = (data) => {
+  const result = [];
+  for (let i = 0; i < data.length; i++) {
+    if (result.length === HOTELS_COUNT) {
+      break;
+    }
+    if (filterByType(data[i]) && filterByPrice(data[i]) && filterByRooms(data[i]) && filterByGuests(data[i]) && filterByFeatures(data[i])) {
+      result.push(data[i]);
+    }
+  }
+  return result;
+};
+
 const setCommonMarkers = (hotels) => {
-  hotels
-    .filter(filterByType)
-    .filter(filterByPrice)
-    .filter(filterByRooms)
-    .filter(filterByGuests)
-    .filter(filterByFeatures)
-    .slice(0, HOTELS_COUNT)
+  getFiltered(hotels)
     .forEach((hotel) => {
       createMarker(hotel);
     });
@@ -162,26 +170,19 @@ const initMap = (callback) => {
   callback();
 };
 
-filterTypeElement.addEventListener('change', () => {
-  getData(updateCommonMarkers, showAlert);
-});
+filterTypeElement.addEventListener('change', debounce(() => getData(updateCommonMarkers, showAlert)));
 
-filterPriceElement.addEventListener('change', () => {
-  getData(updateCommonMarkers, showAlert);
-});
+filterPriceElement.addEventListener('change', debounce(() => getData(updateCommonMarkers, showAlert)));
 
-filterRoomsElement.addEventListener('change', () => {
-  getData(updateCommonMarkers, showAlert);
-});
+filterRoomsElement.addEventListener('change', debounce(() => getData(updateCommonMarkers, showAlert)));
 
-filterGuestsElement.addEventListener('change', () => {
-  getData(updateCommonMarkers, showAlert);
-});
+filterGuestsElement.addEventListener('change', debounce(() => getData(updateCommonMarkers, showAlert)));
 
-filterFeaturesElement.addEventListener('click', (evt) => {
-  if (evt.target.classList.contains('map__feature')) {
+filterFeaturesElement.addEventListener('click', debounce((evt) => {
+  if (evt.target.classList.contains('map__checkbox')) {
     getData(updateCommonMarkers, showAlert);
   }
-});
+}));
+
 
 export {initMap, setCommonMarkers, resetMainMarker};
