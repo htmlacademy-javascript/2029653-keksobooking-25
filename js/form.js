@@ -29,6 +29,8 @@ const MIN_PRICE_RULES = {
   'palace': 10000,
 };
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
+
 const adFormElement = document.querySelector('.ad-form');
 const roomNumberElement = document.querySelector('#room_number');
 const capacityElement = document.querySelector('#capacity');
@@ -36,6 +38,10 @@ const housingTypeElement = document.querySelector('#type');
 const priceElement = document.querySelector('#price');
 const timeinElement = document.querySelector('#timein');
 const timeoutElement = document.querySelector('#timeout');
+const avatarChooserElement = document.querySelector('#avatar');
+const previewAvatarElement = document.querySelector('.ad-form-header__preview > img');
+const photoChooserElement = document.querySelector('#images');
+const previewPhotoElement = document.querySelector('.ad-form__photo');
 
 const adFormValidator = new Pristine(adFormElement, {
   classTo: 'ad-form__element',
@@ -115,6 +121,28 @@ timeinElement.addEventListener('change', () => {
 
 timeoutElement.addEventListener('change', () => {
   timeinElement.selectedIndex = timeoutElement.selectedIndex;
+});
+
+avatarChooserElement.addEventListener('change', () => {
+  const file = avatarChooserElement.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    previewAvatarElement.src = URL.createObjectURL(file);
+  }
+});
+
+photoChooserElement.addEventListener('change', () => {
+  const file = photoChooserElement.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    previewPhotoElement.style.backgroundImage = `url(${URL.createObjectURL(file)})`;
+  }
 });
 
 export {activateForm, deactivateForm, initForm};
