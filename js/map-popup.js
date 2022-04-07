@@ -1,8 +1,6 @@
 import {APARTMENT_TYPES} from './constants.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
-// const cardsFragment = document.createDocumentFragment();
-// const mapContainer = document.querySelector('#map-canvas');
 
 const createCardElement = (hotel) => {
   const cardElement = cardTemplate.cloneNode(true);
@@ -27,14 +25,14 @@ const createCardElement = (hotel) => {
         featuresListItem.remove();
       }
     });
+  } else {
+    cardElement.querySelector('ul.popup__features').remove();
   }
-  else {
-    featuresList.forEach((featuresListItem) => {
-      featuresListItem.remove();
-    });
+  if (hotel.offer.description) {
+    cardElement.querySelector('.popup__description').textContent = hotel.offer.description;
+  } else {
+    cardElement.querySelector('.popup__description').remove();
   }
-
-  cardElement.querySelector('.popup__description').textContent = hotel.offer.description;
 
   const photos = cardElement.querySelector('.popup__photos');
   const photoElement = photos.querySelector('.popup__photo');
@@ -49,11 +47,5 @@ const createCardElement = (hotel) => {
   photoElement.remove();
   return cardElement;
 };
-
-// createdObjects.forEach((element) => {
-//   cardsFragment.appendChild(createCardElement(element));
-// });
-
-// mapContainer.appendChild(createCardElement(createdObjects[0]));
 
 export {createCardElement};
