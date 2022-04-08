@@ -1,7 +1,5 @@
 import {HOTELS_DATA_URL, DATA_URL} from './constants.js';
 
-const submitButton = document.querySelector('.ad-form__submit');
-
 let hotelsData = [];
 
 const getData = (onSuccess, onFail) => {
@@ -25,8 +23,8 @@ const getData = (onSuccess, onFail) => {
     });
 };
 
-const sendData = (onSuccess, onFail, body) => {
-  submitButton.disabled = true;
+const sendData = (onSuccess, onFail, body, onStart, onFinally) => {
+  onStart();
   fetch(
     DATA_URL,
     {
@@ -45,7 +43,7 @@ const sendData = (onSuccess, onFail, body) => {
       onFail(err.message);
     })
     .finally(() => {
-      submitButton.disabled = false;
+      onFinally();
     });
 };
 
