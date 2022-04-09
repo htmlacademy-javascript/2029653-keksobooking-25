@@ -1,11 +1,12 @@
 import {DEFAULT_COORDINATES} from './constants.js';
-import {createCardElement} from './generator.js';
+import {createCardElement} from './map-popup.js';
 import {getData} from './api.js';
 import {showAlert} from './messages.js';
 import {debounce} from './util.js';
 
 const HOTELS_COUNT = 10;
 
+const mapFiltersElement = document.querySelector('.map__filters');
 const addressElement = document.querySelector('#address');
 const filterTypeElement = document.querySelector('#housing-type');
 const filterPriceElement = document.querySelector('#housing-price');
@@ -44,6 +45,14 @@ const mainPinMarker = L.marker(
     icon: mainPinIcon,
   },
 );
+
+const deactivateMapFilters = () => {
+  mapFiltersElement.classList.add('map__filters--disabled');
+};
+
+const activateMapFilters = () => {
+  mapFiltersElement.classList.remove('map__filters--disabled');
+};
 
 const filterByType = (data) => {
   const selectedHousingType = filterTypeElement.options[filterTypeElement.selectedIndex].value;
@@ -162,6 +171,11 @@ const updateCommonMarkers = (hotels) => {
   setCommonMarkers(hotels);
 };
 
+const initCommonMarkers = (hotels) => {
+  setCommonMarkers(hotels);
+  activateMapFilters();
+};
+
 const initMap = (callback) => {
   addMap();
   initMainMarker();
@@ -185,4 +199,4 @@ filterFeaturesElement.addEventListener('click', debounce((evt) => {
 }));
 
 
-export {initMap, setCommonMarkers, resetMainMarker};
+export {initMap, initCommonMarkers, resetMainMarker, deactivateMapFilters, activateMapFilters};

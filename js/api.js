@@ -23,7 +23,8 @@ const getData = (onSuccess, onFail) => {
     });
 };
 
-const sendData = (onSuccess, onFail, body) => {
+const sendData = (onSuccess, onFail, body, onStart, onFinally) => {
+  onStart();
   fetch(
     DATA_URL,
     {
@@ -40,6 +41,9 @@ const sendData = (onSuccess, onFail, body) => {
     })
     .catch((err) => {
       onFail(err.message);
+    })
+    .finally(() => {
+      onFinally();
     });
 };
 

@@ -38,6 +38,7 @@ const housingTypeElement = document.querySelector('#type');
 const priceElement = document.querySelector('#price');
 const timeinElement = document.querySelector('#timein');
 const timeoutElement = document.querySelector('#timeout');
+const submitButton = document.querySelector('.ad-form__submit');
 const avatarChooserElement = document.querySelector('#avatar');
 const previewAvatarElement = document.querySelector('.ad-form-header__preview > img');
 const photoChooserElement = document.querySelector('#images');
@@ -65,6 +66,14 @@ const activateForm = () => {
   activeElements.forEach((element) => {
     element.classList.remove('disabled');
   });
+};
+
+const disableSubmitButton = () => {
+  submitButton.disabled = true;
+};
+
+const activateSubmitButton = () => {
+  submitButton.disabled = false;
 };
 
 const validateRoomNumber = (roomsCount) => {
@@ -101,7 +110,7 @@ const initForm = () => {
   adFormElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
     if (adFormValidator.validate()) {
-      sendData(onSuccess, showAlert,  new FormData(adFormElement));
+      sendData(onSuccess, showAlert, new FormData(adFormElement), disableSubmitButton, activateSubmitButton);
     }
   });
 };
