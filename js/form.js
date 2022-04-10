@@ -29,6 +29,8 @@ const MIN_PRICE_RULES = {
   'palace': 10000,
 };
 
+const DEFAULT_AVATAR_IMAGE_SCR = 'img/muffin-grey.svg';
+
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
 
 const adFormElement = document.querySelector('.ad-form');
@@ -91,8 +93,18 @@ const validateMinPrice = (price) => {
   return price >= MIN_PRICE_RULES[selectedHousingType];
 };
 
+const resetAvatarPreview = () => {
+  previewAvatarElement.src = DEFAULT_AVATAR_IMAGE_SCR;
+};
+
+const resetPhotoPreview = () => {
+  previewPhotoElement.style.removeProperty('background-image');
+};
+
 const resetAdForm = () => {
   adFormElement.reset();
+  resetAvatarPreview();
+  resetPhotoPreview();
   resetMainMarker();
   resetPriceSlider();
 };
