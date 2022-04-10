@@ -4,10 +4,12 @@ const cardTemplate = document.querySelector('#card').content.querySelector('.pop
 
 const createCardElement = (hotel) => {
   const cardElement = cardTemplate.cloneNode(true);
+  const priceTemplate = document.createElement('span');
+  priceTemplate.textContent = hotel.offer.price;
   cardElement.querySelector('.popup__avatar').src = hotel.author.avatar;
   cardElement.querySelector('.popup__title').textContent = hotel.offer.title;
   cardElement.querySelector('.popup__text--address').textContent = hotel.offer.address;
-  cardElement.querySelector('.popup__text--price').innerHTML = `${hotel.offer.price} <span>₽/ночь</span>`;
+  cardElement.querySelector('.popup__text--price').innerHTML = `${priceTemplate.textContent} <span>₽/ночь</span>`;
   cardElement.querySelector('.popup__type').textContent = APARTMENT_TYPES[hotel.offer.type];
   cardElement.querySelector('.popup__text--capacity').textContent = `${hotel.offer.rooms} комнаты для ${hotel.offer.guests}`;
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${hotel.offer.checkin}, выезд до ${hotel.offer.checkout}`;
